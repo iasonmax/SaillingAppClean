@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SailingAppClean.Domain\SailingAppClean.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

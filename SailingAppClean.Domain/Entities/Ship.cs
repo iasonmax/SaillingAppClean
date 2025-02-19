@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SailingAppClean.Domain.Entities
 {
@@ -17,6 +18,10 @@ namespace SailingAppClean.Domain.Entities
         public DateTime PurchasedDate { get; set; }
 
         public DateTime LastMaintenanceDate { get; set; }
+
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
 
     }
 }

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SailingAppClean.Domain.Entities;
 
 namespace SaillingAppClean.Infrastructure.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -11,10 +12,11 @@ namespace SaillingAppClean.Infrastructure.Data
         }
 
         public DbSet<Ship> Ships { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Ship>().HasData(
               new Ship
@@ -28,7 +30,8 @@ namespace SaillingAppClean.Infrastructure.Data
                   Damages = null,
                   CreatedDate = DateTime.Now.AddDays(-30),
                   PurchasedDate = new DateTime(2018, 05, 15),
-                  LastMaintenanceDate = new DateTime(2023, 10, 20)
+                  LastMaintenanceDate = new DateTime(2023, 10, 20),
+                  CategoryId = 3
               },
               new Ship
               {
@@ -41,7 +44,8 @@ namespace SaillingAppClean.Infrastructure.Data
                   Damages = "Minor scratch on hull (repaired)",
                   CreatedDate = DateTime.Now.AddDays(-15),
                   PurchasedDate = new DateTime(2021, 11, 01),
-                  LastMaintenanceDate = new DateTime(2024, 01, 10)
+                  LastMaintenanceDate = new DateTime(2024, 01, 10),
+                  CategoryId = 4
               },
               new Ship
               {
@@ -54,7 +58,8 @@ namespace SaillingAppClean.Infrastructure.Data
                   Damages = null,
                   CreatedDate = DateTime.Now.AddDays(-60),
                   PurchasedDate = new DateTime(2015, 07, 04),
-                  LastMaintenanceDate = new DateTime(2023, 06, 25)
+                  LastMaintenanceDate = new DateTime(2023, 06, 25),
+                  CategoryId = 1
               },
               new Ship
               {
@@ -68,7 +73,8 @@ namespace SaillingAppClean.Infrastructure.Data
                   Damages = null,
                   CreatedDate = DateTime.Now.AddDays(-90),
                   PurchasedDate = new DateTime(2022, 03, 10),
-                  LastMaintenanceDate = new DateTime(2023, 12, 01)
+                  LastMaintenanceDate = new DateTime(2023, 12, 01),
+                  CategoryId = 1
               },
               new Ship
               {
@@ -82,9 +88,17 @@ namespace SaillingAppClean.Infrastructure.Data
                   Damages = "Slight interior damage (being repaired)",
                   CreatedDate = DateTime.Now.AddDays(-5),
                   PurchasedDate = new DateTime(2020, 09, 18),
-                  LastMaintenanceDate = new DateTime(2024, 02, 15)
+                  LastMaintenanceDate = new DateTime(2024, 02, 15),
+                  CategoryId = 2
               }
             );
+
+            modelBuilder.Entity<Category>().HasData(
+               new Category { Id = 1, Name = "Monohull", DisplayOrder = 1 },
+               new Category { Id = 2, Name = "Catamaran", DisplayOrder = 2 },
+               new Category { Id = 3, Name = "Monohull with deep keel", DisplayOrder = 3 },
+               new Category { Id = 4, Name = "Trimaran", DisplayOrder = 4 }
+               );
         }
     }
 }
