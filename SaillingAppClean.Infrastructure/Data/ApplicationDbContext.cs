@@ -4,7 +4,7 @@ using SailingAppClean.Domain.Entities;
 
 namespace SaillingAppClean.Infrastructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -13,6 +13,7 @@ namespace SaillingAppClean.Infrastructure.Data
 
         public DbSet<Ship> Ships { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ApplicationUser> MyProperty { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
