@@ -1,5 +1,6 @@
 ﻿using SailingAppClean.Application.Common.Interfaces;
 using SaillingAppClean.Infrastructure.Data;
+using SaillingAppClean.Infrastructure.Repositories;
 
 namespace SaillingAppClean.Infrastructure.Repository
 {
@@ -7,11 +8,13 @@ namespace SaillingAppClean.Infrastructure.Repository
     {
         private readonly ApplicationDbContext _db;
         public IShipRepository Ship { get; private set; }
+        public ICategoryRepository Category { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Ship = new ShipRepository(_db);
+            Category = new CategoryRepository(_db);
         }
         public void Save()
         {

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SailingAppClean.Application.Common.Interfaces;
 using SailingAppClean.Domain.Entities;
+using SaillingAppClean.Web.ViewModels;
 
 namespace SaillingAppClean.Web.Controllers
 {
@@ -16,22 +18,42 @@ namespace SaillingAppClean.Web.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Ship> ships = _unitOfWork.Ship.GetAll().ToList();
+            IEnumerable<Ship> ships = _unitOfWork.Ship.GetAll(includeProperties: "Category").ToList();
             return View(ships);
         }
 
         public IActionResult Upsert(int? id)
         {
+            // Initialize the ViewModel
+            ShipVm shipVM = new()
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                }),
+                Ship = new Ship()
+            };
+            if (id == null)
+            {
+                return View(shipVM);
+            }
+            // If id is not null, fetch the ship from the database
             if (id != null)
             {
                 Ship? shipFromDb = _unitOfWork.Ship.Get(u => u.Id == id);
                 if (shipFromDb == null)
                 {
+                    // Redirect to an error page if the ship is not found
                     return RedirectToAction("Error", "Home");
                 }
-                return View(shipFromDb);
+
+                // Populate the Ship property of the ViewModel with the fetched data
+                shipVM.Ship = shipFromDb;
+                return View(shipVM);
             }
 
+            // if you get here you messed up
             return View();
         }
 

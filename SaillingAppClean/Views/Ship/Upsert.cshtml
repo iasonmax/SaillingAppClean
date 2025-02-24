@@ -1,4 +1,4 @@
-﻿@model Ship
+﻿@model ShipVm
 
 
 <h1>
@@ -10,52 +10,60 @@
 <div class="row">
     <div class="col-md-12">
         <form method="post" class="row" enctype="multipart/form-data">
-            <input asp-for="Id" type="hidden" />
+            <input asp-for="Ship.Id" type="hidden" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Ship.Name" class="control-label"></label>
+                <input asp-for="Ship.Name" class="form-control" />
+                <span asp-validation-for="Ship.Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating py-2">
+                <select asp-for="Ship.CategoryId" asp-items="Model.CategoryList ?? new SelectList(Enumerable.Empty<SelectListItem>())"
+                        class="form-select border-0 shadow">
+                    <option disabled selected>--Select Category--</option>
+                </select>
+                <label asp-for="Ship.CategoryId" class="ms-2"></label>
+                <span asp-validation-for="Ship.CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Ship.Description" class="control-label"></label>
+                <input asp-for="Ship.Description" class="form-control" />
+                <span asp-validation-for="Ship.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BaseDailyRate" class="control-label"></label>
-                <input asp-for="BaseDailyRate" class="form-control" />
-                <span asp-validation-for="BaseDailyRate" class="text-danger"></span>
+                <label asp-for="Ship.BaseDailyRate" class="control-label"></label>
+                <input asp-for="Ship.BaseDailyRate" class="form-control" />
+                <span asp-validation-for="Ship.BaseDailyRate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Capacity" class="control-label"></label>
-                <input asp-for="Capacity" class="form-control" />
-                <span asp-validation-for="Capacity" class="text-danger"></span>
+                <label asp-for="Ship.Capacity" class="control-label"></label>
+                <input asp-for="Ship.Capacity" class="form-control" />
+                <span asp-validation-for="Ship.Capacity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HomePort" class="control-label"></label>
-                <input asp-for="HomePort" class="form-control" />
-                <span asp-validation-for="HomePort" class="text-danger"></span>
+                <label asp-for="Ship.HomePort" class="control-label"></label>
+                <input asp-for="Ship.HomePort" class="form-control" />
+                <span asp-validation-for="Ship.HomePort" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Damages" class="control-label"></label>
-                <input asp-for="Damages" class="form-control" />
-                <span asp-validation-for="Damages" class="text-danger"></span>
+                <label asp-for="Ship.Damages" class="control-label"></label>
+                <input asp-for="Ship.Damages" class="form-control" />
+                <span asp-validation-for="Ship.Damages" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                <label asp-for="Ship.CreatedDate" class="control-label"></label>
+                <input asp-for="Ship.CreatedDate" class="form-control" />
+                <span asp-validation-for="Ship.CreatedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PurchasedDate" class="control-label"></label>
-                <input asp-for="PurchasedDate" class="form-control" />
-                <span asp-validation-for="PurchasedDate" class="text-danger"></span>
+                <label asp-for="Ship.PurchasedDate" class="control-label"></label>
+                <input asp-for="Ship.PurchasedDate" class="form-control" />
+                <span asp-validation-for="Ship.PurchasedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastMaintenanceDate" class="control-label"></label>
-                <input asp-for="LastMaintenanceDate" class="form-control" />
-                <span asp-validation-for="LastMaintenanceDate" class="text-danger"></span>
+                <label asp-for="Ship.LastMaintenanceDate" class="control-label"></label>
+                <input asp-for="Ship.LastMaintenanceDate" class="form-control" />
+                <span asp-validation-for="Ship.LastMaintenanceDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Create</button>

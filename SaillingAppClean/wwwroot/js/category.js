@@ -1,5 +1,4 @@
 ﻿function Delete(url) {
-    // Use the built-in confirm dialog
     const userConfirmed = confirm("Are you sure? This action cannot be undone!");
 
     if (userConfirmed) {

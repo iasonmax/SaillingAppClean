@@ -3,6 +3,7 @@
     public interface IUnitOfWork
     {
         IShipRepository Ship { get; }
+        ICategoryRepository Category { get; }
 
         void Save();
     }
