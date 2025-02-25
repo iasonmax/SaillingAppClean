@@ -18,8 +18,4 @@
     <ProjectReference Include="..\SaillingAppClean.Infrastructure\SaillingAppClean.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\images\" />
-  </ItemGroup>
-
 </Project>
