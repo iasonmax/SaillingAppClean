@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SailingAppClean.Application.Common.Interfaces;
 using SailingAppClean.Application.Common.Utility;
 using SailingAppClean.Domain.Entities;
 using SaillingAppClean.Web.ViewModels;
+using System.Security.Claims;
 
 namespace SaillingAppClean.Web.Controllers
 {
@@ -128,6 +130,74 @@ namespace SaillingAppClean.Web.Controllers
             return View(registerVM);
         }
 
+        [HttpGet]
+        public IActionResult FacebookLogin(string returnUrl = null)
+        {
+            string redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
+            AuthenticationProperties properties = _signInManager.ConfigureExternalAuthenticationProperties("Facebook", redirectUrl);
+            return Challenge(properties, "Facebook");
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+        {
+            returnUrl ??= Url.Content("~/");
+
+            if (remoteError != null)
+            {
+                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                return RedirectToAction(nameof(Login));
+            }
+
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            // Sign in the user with this external login provider if the user already has a login.
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+            if (result.Succeeded)
+            {
+                return LocalRedirect(returnUrl);
+            }
+
+            // If the user does not have an account, create one.
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            var name = info.Principal.FindFirstValue(ClaimTypes.Name);
+
+            if (email != null)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = email,
+                    Email = email,
+                    Name = name,
+                    EmailConfirmed = true,
+                    CreatedDate = DateTime.Now
+                };
+
+                var createResult = await _userManager.CreateAsync(user);
+                if (createResult.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, SD.Role_Customer);
+                    await _userManager.AddLoginAsync(user, info);
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    return LocalRedirect(returnUrl);
+                }
+
+                foreach (var error in createResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return RedirectToAction(nameof(Login));
+        }
+
+
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -137,5 +207,6 @@ namespace SaillingAppClean.Web.Controllers
         {
             return View();
         }
+
     }
 }

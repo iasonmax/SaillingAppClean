@@ -26,6 +26,11 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 6;
 });
 
+builder.Services.AddAuthentication().AddFacebook(options =>
+{
+    options.AppId = "642809818221535";
+    options.AppSecret = "4f74e38b845adb13a5683e75f2b58cc1";
+});
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
