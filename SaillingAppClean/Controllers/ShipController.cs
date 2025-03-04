@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SailingAppClean.Application.Common.Interfaces;
+using SailingAppClean.Application.Common.Utility;
 using SailingAppClean.Domain.Entities;
 using SaillingAppClean.Web.ViewModels;
 
 namespace SaillingAppClean.Web.Controllers
 {
+    [Authorize(Roles = SD.Role_Admin)]
     public class ShipController : Controller
     {
 
@@ -81,6 +84,13 @@ namespace SaillingAppClean.Web.Controllers
         }
 
         #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            IEnumerable<Ship> ships = _unitOfWork.Ship.GetAll(includeProperties: "Category").ToList();
+            return Json(new { data = ships });
+        }
 
         [HttpDelete]
         public IActionResult Delete(int? id)

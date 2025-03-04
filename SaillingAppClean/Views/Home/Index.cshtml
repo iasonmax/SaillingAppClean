@@ -1,8 +1,37 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<Ship>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>
+    Our Fleet
+</h1>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var ship in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">@ship.Name</h3>
+                    <p class="card-text">@ship.Description</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>Base Daily Rate:</strong> @ship.BaseDailyRate.ToString("C")
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Capacity:</strong> @ship.Capacity
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Home Port:</strong> @ship.HomePort
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Last Maintenance:</strong>
+                        @ship.LastMaintenanceDate.ToShortDateString()
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
 </div>
+
+
+

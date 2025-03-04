@@ -1,19 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
+using SailingAppClean.Application.Common.Interfaces;
+using SailingAppClean.Domain.Entities;
 
 namespace SaillingAppClean.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IUnitOfWork _unitOfWork;
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Ship> ships = _unitOfWork.Ship.GetAll(includeProperties: "Category").ToList();
+            return View(ships);
         }
 
         public IActionResult Privacy()
