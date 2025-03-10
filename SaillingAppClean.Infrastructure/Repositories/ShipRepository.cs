@@ -6,10 +6,8 @@ namespace SaillingAppClean.Infrastructure.Repository
 {
     internal class ShipRepository : Repository<Ship>, IShipRepository
     {
-        private readonly ApplicationDbContext _db;
         public ShipRepository(ApplicationDbContext db) : base(db)
         {
-            _db = db;
         }
 
         public void Update(Ship ship)

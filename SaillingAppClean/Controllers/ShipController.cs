@@ -67,6 +67,25 @@ namespace SaillingAppClean.Web.Controllers
 
             if (ModelState.IsValid)
             {
+                if (ship.Image != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(ship.Image.FileName);
+                    string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, @"images/Ships");
+
+                    if (ship.Id > 0)
+                    {
+                        var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, ship.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+                    using var fileStream = new FileStream(Path.Combine(imagePath, fileName), FileMode.Create);
+                    ship.Image.CopyTo(fileStream);
+
+                    ship.ImageUrl = @"\images\Ships\" + fileName;
+                }
+
                 if (ship.Id == 0)
                 {
                     _unitOfWork.Ship.Add(ship);
@@ -75,7 +94,7 @@ namespace SaillingAppClean.Web.Controllers
                 else
                 {
                     _unitOfWork.Ship.Update(ship);
-                    TempData["success"] = "Ship added successfully";
+                    TempData["success"] = "Ship updated successfully";
                 }
                 _unitOfWork.Save();
                 return RedirectToAction("Index");
@@ -99,11 +118,11 @@ namespace SaillingAppClean.Web.Controllers
             if (productToBeDeleted == null)
                 return Json(new { success = false, message = "Error while deleting" });
 
-            //var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath);
-
-            //, productToBeDeleted.ImageUrl.TrimStart('\\')
-            //if (System.IO.File.Exists(oldImagePath))
-            //    System.IO.File.Delete(oldImagePath);
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, _unitOfWork.Ship.Get(u => u.Id == id).ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
 
             _unitOfWork.Ship.Remove(productToBeDeleted);
             _unitOfWork.Save();

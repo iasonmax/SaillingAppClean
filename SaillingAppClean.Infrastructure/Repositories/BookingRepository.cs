@@ -5,15 +5,15 @@ using SaillingAppClean.Infrastructure.Repository;
 
 namespace SaillingAppClean.Infrastructure.Repositories
 {
-    internal class CategoryRepository : Repository<Category>, ICategoryRepository
+    internal class BookingRepository : Repository<Booking>, IBookingRepository
     {
-        public CategoryRepository(ApplicationDbContext db) : base(db)
+        public BookingRepository(ApplicationDbContext db) : base(db)
         {
         }
 
-        public void Update(Category category)
+        public void Update(Booking booking)
         {
-            _db.Categories.Update(category);
+            throw new NotImplementedException();
         }
     }
 }

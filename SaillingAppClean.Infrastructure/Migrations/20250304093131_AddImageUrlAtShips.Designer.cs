@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SaillingAppClean.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SaillingAppClean.Infrastructure.Data;
 namespace SaillingAppClean.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250304093131_AddImageUrlAtShips")]
+    partial class AddImageUrlAtShips
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,74 +230,6 @@ namespace SaillingAppClean.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("SailingAppClean.Domain.Entities.Booking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("ActualCheckInDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ActualCheckOutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("BookingTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateOnly>("CheckInDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly>("CheckOutDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsPaymentSuccessfull")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ShipId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StripePaymentIntentId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StripeSessionId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("TotalCost")
-                        .HasColumnType("float");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ShipId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Bookings");
-                });
-
             modelBuilder.Entity("SailingAppClean.Domain.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -397,7 +332,7 @@ namespace SaillingAppClean.Infrastructure.Migrations
                             BaseDailyRate = 250.0,
                             Capacity = 6,
                             CategoryId = 3,
-                            CreatedDate = new DateTime(2025, 2, 4, 16, 32, 12, 581, DateTimeKind.Local).AddTicks(6222),
+                            CreatedDate = new DateTime(2025, 2, 2, 11, 31, 30, 664, DateTimeKind.Local).AddTicks(6168),
                             Description = "A classic sailing yacht, perfect for coastal cruises.",
                             HomePort = "Miami, FL",
                             LastMaintenanceDate = new DateTime(2023, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -410,7 +345,7 @@ namespace SaillingAppClean.Infrastructure.Migrations
                             BaseDailyRate = 400.0,
                             Capacity = 10,
                             CategoryId = 4,
-                            CreatedDate = new DateTime(2025, 2, 19, 16, 32, 12, 581, DateTimeKind.Local).AddTicks(6276),
+                            CreatedDate = new DateTime(2025, 2, 17, 11, 31, 30, 664, DateTimeKind.Local).AddTicks(6213),
                             Damages = "Minor scratch on hull (repaired)",
                             Description = "A modern catamaran, offering stability and spaciousness.",
                             HomePort = "Tortola, BVI",
@@ -424,7 +359,7 @@ namespace SaillingAppClean.Infrastructure.Migrations
                             BaseDailyRate = 600.0,
                             Capacity = 8,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(2025, 1, 5, 16, 32, 12, 581, DateTimeKind.Local).AddTicks(6280),
+                            CreatedDate = new DateTime(2025, 1, 3, 11, 31, 30, 664, DateTimeKind.Local).AddTicks(6218),
                             Description = "A sturdy motor yacht, ideal for long-distance voyages.",
                             HomePort = "San Diego, CA",
                             LastMaintenanceDate = new DateTime(2023, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -437,7 +372,7 @@ namespace SaillingAppClean.Infrastructure.Migrations
                             BaseDailyRate = 180.0,
                             Capacity = 4,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(2024, 12, 6, 16, 32, 12, 581, DateTimeKind.Local).AddTicks(6284),
+                            CreatedDate = new DateTime(2024, 12, 4, 11, 31, 30, 664, DateTimeKind.Local).AddTicks(6221),
                             Description = "A nimble sailboat, great for exploring secluded coves and bays.",
                             HomePort = "Annapolis, MD",
                             LastMaintenanceDate = new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -450,7 +385,7 @@ namespace SaillingAppClean.Infrastructure.Migrations
                             BaseDailyRate = 1200.0,
                             Capacity = 12,
                             CategoryId = 2,
-                            CreatedDate = new DateTime(2025, 3, 1, 16, 32, 12, 581, DateTimeKind.Local).AddTicks(6287),
+                            CreatedDate = new DateTime(2025, 2, 27, 11, 31, 30, 664, DateTimeKind.Local).AddTicks(6226),
                             Damages = "Slight interior damage (being repaired)",
                             Description = "A luxurious superyacht, offering unparalleled comfort and style.",
                             HomePort = "Monaco",
@@ -509,25 +444,6 @@ namespace SaillingAppClean.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SailingAppClean.Domain.Entities.Booking", b =>
-                {
-                    b.HasOne("SailingAppClean.Domain.Entities.Ship", "Ship")
-                        .WithMany()
-                        .HasForeignKey("ShipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SailingAppClean.Domain.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ship");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SailingAppClean.Domain.Entities.Ship", b =>

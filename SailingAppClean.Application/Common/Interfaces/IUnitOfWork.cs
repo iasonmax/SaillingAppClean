@@ -4,6 +4,7 @@
     {
         IShipRepository Ship { get; }
         ICategoryRepository Category { get; }
+        IBookingRepository Booking { get; }
 
         void Save();
     }

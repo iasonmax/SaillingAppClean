@@ -1,37 +1,93 @@
-﻿@model IEnumerable<Ship>
+﻿@model HomeVM
 
-<h1>
-    Our Fleet
-</h1>
-
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    @foreach (var ship in Model)
-    {
-        <div class="col">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h3 class="card-title">@ship.Name</h3>
-                    <p class="card-text">@ship.Description</p>
+<div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="~/images/slide2.jpg" class="d-block w-100 " alt="Beautiful ocean view" loading="lazy" height="400">
+                <div class="carousel-caption d-none d-md-block">
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <strong>Base Daily Rate:</strong> @ship.BaseDailyRate.ToString("C")
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Capacity:</strong> @ship.Capacity
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Home Port:</strong> @ship.HomePort
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Last Maintenance:</strong>
-                        @ship.LastMaintenanceDate.ToShortDateString()
-                    </li>
-                </ul>
+            </div>
+            <div class="carousel-item">
+                <img src="~/images/slide1.jpg" class="d-block w-100 " alt="Sunset over the horizon" loading="lazy" height="400">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
             </div>
         </div>
-    }
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <form method="post" style="background-color: black; color: white;" asp-action="GetShipsByDate">
+        <div class="row p-0 mx-0 py-4 align-items-center">
+            <!-- Embarking Date -->
+            <div class="col-4 pl-2 pr-2">
+                <div class="form-group">
+                    <label for="EmbarkationDate">Embarking Date</label>
+                    <input asp-for="EmbarkationDate" class="form-control" type="date" />
+                </div>
+            </div>
+
+            <!-- Disembarking Date -->
+            <div class="col-4 pl-2 pr-2">
+                <div class="form-group">
+                    <label for="DisembarkationDate">Disembarking Date</label>
+                    <input asp-for="DisembarkationDate" type="date" class="form-control" />
+                </div>
+            </div>
+
+            <!-- Check Availability Button -->
+            <div class="col-4 pl-2 pr-2">
+                <div class="form-group">
+                    <button type="button" onclick="fnLoadShipList()" class="btn btn-success btn-block">
+                        <i class="bi bi-search"></i>&nbsp; Check Availability
+                    </button>
+                </div>
+            </div>
+        </div>
+        <partial name="_ShipList" model="Model"/>
+    </form>
 </div>
 
+@section scripts {
+    <script>
+        function fnLoadShipList() {
+            $('.spinner').show();
+            var objData = {
+                embarkingDate: $("#EmbarkationDate").val(),
+                disembarkingDate: $("#DisembarkationDate").val()
+            };
 
-
+            $.ajax({
+                url: "@Url.Action("GetShipsByDate", "Home")",
+                data: objData,
+                type: "POST",
+                success: function (data) {
+                    $("#ShipList").empty();
+                    $("#ShipList").html(data);
+                    $('.spinner').hide();
+                },
+                failure: function (response) {
+                    $('.spinner').hide();
+                    alert(response.responseText);
+                },
+                Error: function (response) {
+                    $('.spinner').hide();
+                    alert(response.responseText);
+                }
+                 
+            });
+        }
+    </script>
+}

@@ -11,7 +11,17 @@ function loadDataTable() {
             { data: 'name', "width": "10%" },
             { data: 'capacity', "width": "10%" },
             { data: 'homePort', "width": "10%" },
-            { data: 'lastMaintenanceDate', "width": "10%" },
+            {
+                data: 'lastMaintenanceDate',
+                "render": function (data) {
+                    if (data) {
+                        const date = new Date(data);
+                        return date.toLocaleDateString(); // Format as MM/DD/YYYY
+                    }
+                    return ""; // Return empty string if no date is available
+                },
+                "width": "10%"
+            },
             { data: 'category.name', "width": "10%" },
             {
                 data: 'id',

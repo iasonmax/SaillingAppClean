@@ -14,6 +14,7 @@ namespace SaillingAppClean.Infrastructure.Data
         public DbSet<Ship> Ships { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ApplicationUser> MyProperty { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

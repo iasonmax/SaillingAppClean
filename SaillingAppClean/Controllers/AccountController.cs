@@ -12,7 +12,6 @@ namespace SaillingAppClean.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -25,7 +24,7 @@ namespace SaillingAppClean.Web.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
-            _unitOfWork = unitOfWork;
+
         }
         public IActionResult Login(string returnUrl = null)
         {

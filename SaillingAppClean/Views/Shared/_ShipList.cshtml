@@ -1,0 +1,92 @@
+﻿@model HomeVM
+
+
+<div id="ShipList">
+    <div class="row px-lg-5 m-lg-4 m-sm-0 px-sm-0" style="--bs-gutter-x:0">
+
+        @foreach (var ship in Model.ShipList)
+        {
+            <div class="p-4 col-md-12 col-lg-6">
+                <div class="row" style="border-radius:5px; border: 1px solid #aaa">
+                    <div class="col-4 p-2">
+                        <img class="d-block w-100" style="border-radius:5px;" src="@ship.ImageUrl">
+                    </div>
+                    <div class="col-8">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title text-warning" style="font-size:xx-large">@ship.Name</p>
+                            <div class="pt-2">
+                                <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target='#exampleModal-@(ship.Id)'>
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                        <p class="card-text">
+                            @Html.Raw(ship.Description)
+                        </p>
+                    </div>
+                    <div class="col-12">
+                        <div class="row pb-3 pt-2">
+                            <div class="col-4">
+                                @if ( Model.EmbarkationDate >= DateOnly.FromDateTime(DateTime.Now))
+                                {
+                                    if (ship?.IsAvailiable == true)
+                                    {
+                                        <a asp-controller="Booking" asp-action="FinalizeBooking"
+                                           asp-route-shipId="@ship.Id" asp-route-checkInDate="@Model.EmbarkationDate" asp-route-checkOutDate="@Model.DisembarkationDate"
+                                        class="btn btn-success form-control btn-block" aria-label="Book Now">
+                                            Book Now
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-danger form-control btn-block" aria-label="Not Available">
+                                            Not Available
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>ops</p>
+                                }
+                            </div>
+                            <div class="col-4">
+                                <span>Max Capacity: @ship?.Capacity </span><br />
+                                <span>Category: @ship?.Category?.Name </span><br />
+                            </div>
+                            <div class="col-4">
+                                <span class="text-warning float-end font-weight-bold pt-1" style="font-size:25px;">
+                                    Daily Rate:
+                                    <span style="border-bottom:1px solid #ff6a00">
+                                        @ship?.BaseDailyRate.ToString("c")
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="exampleModal-@(ship.Id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" style="border: 1px solid #aaa; border-radius:7px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-3 text-success" id="exampleModalLabel"> @ship.Name</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body m-0">
+                            <partial name="_ShipDetails" model="@ship" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>

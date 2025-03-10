@@ -9,12 +9,14 @@ namespace SaillingAppClean.Infrastructure.Repository
         private readonly ApplicationDbContext _db;
         public IShipRepository Ship { get; private set; }
         public ICategoryRepository Category { get; private set; }
+        public IBookingRepository Booking { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Ship = new ShipRepository(_db);
             Category = new CategoryRepository(_db);
+            Booking = new BookingRepository(_db);
         }
         public void Save()
         {

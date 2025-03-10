@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SaillingAppClean.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SaillingAppClean.Infrastructure.Data;
 namespace SaillingAppClean.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250306134916_AddBookingTable")]
+    partial class AddBookingTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,10 +247,10 @@ namespace SaillingAppClean.Infrastructure.Migrations
                     b.Property<DateTime>("BookingTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateOnly>("CheckInDate")
+                    b.Property<DateOnly>("ChaeckOutDate")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly>("CheckOutDate")
+                    b.Property<DateOnly>("CheckInDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Email")
@@ -397,7 +400,7 @@ namespace SaillingAppClean.Infrastructure.Migrations
                             BaseDailyRate = 250.0,
                             Capacity = 6,
                             CategoryId = 3,
-                            CreatedDate = new DateTime(2025, 2, 4, 16, 32, 12, 581, DateTimeKind.Local).AddTicks(6222),
+                            CreatedDate = new DateTime(2025, 2, 4, 15, 49, 16, 145, DateTimeKind.Local).AddTicks(3453),
                             Description = "A classic sailing yacht, perfect for coastal cruises.",
                             HomePort = "Miami, FL",
                             LastMaintenanceDate = new DateTime(2023, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -410,7 +413,7 @@ namespace SaillingAppClean.Infrastructure.Migrations
                             BaseDailyRate = 400.0,
                             Capacity = 10,
                             CategoryId = 4,
-                            CreatedDate = new DateTime(2025, 2, 19, 16, 32, 12, 581, DateTimeKind.Local).AddTicks(6276),
+                            CreatedDate = new DateTime(2025, 2, 19, 15, 49, 16, 145, DateTimeKind.Local).AddTicks(3520),
                             Damages = "Minor scratch on hull (repaired)",
                             Description = "A modern catamaran, offering stability and spaciousness.",
                             HomePort = "Tortola, BVI",
@@ -424,7 +427,7 @@ namespace SaillingAppClean.Infrastructure.Migrations
                             BaseDailyRate = 600.0,
                             Capacity = 8,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(2025, 1, 5, 16, 32, 12, 581, DateTimeKind.Local).AddTicks(6280),
+                            CreatedDate = new DateTime(2025, 1, 5, 15, 49, 16, 145, DateTimeKind.Local).AddTicks(3525),
                             Description = "A sturdy motor yacht, ideal for long-distance voyages.",
                             HomePort = "San Diego, CA",
                             LastMaintenanceDate = new DateTime(2023, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -437,7 +440,7 @@ namespace SaillingAppClean.Infrastructure.Migrations
                             BaseDailyRate = 180.0,
                             Capacity = 4,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(2024, 12, 6, 16, 32, 12, 581, DateTimeKind.Local).AddTicks(6284),
+                            CreatedDate = new DateTime(2024, 12, 6, 15, 49, 16, 145, DateTimeKind.Local).AddTicks(3528),
                             Description = "A nimble sailboat, great for exploring secluded coves and bays.",
                             HomePort = "Annapolis, MD",
                             LastMaintenanceDate = new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -450,7 +453,7 @@ namespace SaillingAppClean.Infrastructure.Migrations
                             BaseDailyRate = 1200.0,
                             Capacity = 12,
                             CategoryId = 2,
-                            CreatedDate = new DateTime(2025, 3, 1, 16, 32, 12, 581, DateTimeKind.Local).AddTicks(6287),
+                            CreatedDate = new DateTime(2025, 3, 1, 15, 49, 16, 145, DateTimeKind.Local).AddTicks(3531),
                             Damages = "Slight interior damage (being repaired)",
                             Description = "A luxurious superyacht, offering unparalleled comfort and style.",
                             HomePort = "Monaco",
