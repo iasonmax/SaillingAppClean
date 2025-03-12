@@ -4,6 +4,8 @@ using SailingAppClean.Application.Common.Interfaces;
 using SailingAppClean.Domain.Entities;
 using SaillingAppClean.Infrastructure.Data;
 using SaillingAppClean.Infrastructure.Repository;
+using Stripe;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,11 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+
+var defaultCulture = new CultureInfo("en-GB"); // British English (dd/MM/yyyy)
+CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
+CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -35,6 +42,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

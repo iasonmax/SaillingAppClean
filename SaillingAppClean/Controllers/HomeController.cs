@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SailingAppClean.Application.Common.Interfaces;
+using SailingAppClean.Application.Common.Utility;
 using SaillingAppClean.Web.ViewModels;
 
 namespace SaillingAppClean.Controllers
@@ -30,12 +31,10 @@ namespace SaillingAppClean.Controllers
         {
             Thread.Sleep(2000);
             var shipList = _unitOfWork.Ship.GetAll(includeProperties: "Category");
+            var bookings = _unitOfWork.Booking.GetAll(u => u.Status == SD.Status_Approved || u.Status == SD.Status_CheckedIn, includeProperties: "Ship").ToList();
             foreach (var ship in shipList)
             {
-                if (ship.Id % 2 == 0)
-                {
-                    ship.IsAvailiable = false;
-                }
+                ship.IsAvailiable = SD.ShipsAvailiability(ship.Id, embarkingDate, disembarkingDate, bookings);
             }
             HomeVM homeVM = new()
             {

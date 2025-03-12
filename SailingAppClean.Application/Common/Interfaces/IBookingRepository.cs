@@ -4,6 +4,8 @@ namespace SailingAppClean.Application.Common.Interfaces
 {
     public interface IBookingRepository : IRepository<Booking>
     {
-        public void Update(Booking booking);
+        void Update(Booking booking);
+        void UpdateStatus(int bookingId, string bookingStatus);
+        void UpdateStripePaymentID(int bookingId, string sessionId, string paymentIntentId);
     }
 }
