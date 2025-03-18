@@ -32,13 +32,15 @@
                                     if (ship?.IsAvailiable == true)
                                     {
                                         <a asp-controller="Booking" asp-action="FinalizeBooking"
-                                           asp-route-shipId="@ship.Id" asp-route-checkInDate="@Model.EmbarkationDate" asp-route-checkOutDate="@Model.DisembarkationDate"
-                                        class="btn btn-success form-control btn-block" aria-label="Book Now">
-                                            Book Now
+                                           asp-route-shipId="@ship.Id"
+                                           asp-route-checkInDate="@Model.EmbarkationDate.ToString("yyyy-MM-dd")"
+                                           asp-route-checkOutDate="@Model.DisembarkationDate.ToString("yyyy-MM-dd")"
+                                           class="btn btn-success form-control btn-block" aria-label="Book Now">
+                                            Book Now 
                                         </a>
                                     }
-                                    else
-                                    {
+                                    else{
+                                    
                                         <a class="btn btn-outline-danger form-control btn-block" aria-label="Not Available">
                                             Not Available
                                         </a>

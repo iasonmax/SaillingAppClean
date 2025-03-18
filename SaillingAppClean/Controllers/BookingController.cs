@@ -24,12 +24,6 @@ namespace SaillingAppClean.Web.Controllers
         [Authorize]
         public IActionResult FinalizeBooking(int shipId, DateOnly checkInDate, DateOnly checkOutDate)
         {
-            DateOnly convCheckInDate = new DateOnly(checkInDate.Year, checkInDate.Day, checkInDate.Month);
-            DateOnly convheckOutDate = new DateOnly(checkOutDate.Year, checkOutDate.Day, checkOutDate.Month);
-
-            checkInDate = convCheckInDate;
-            checkOutDate = convheckOutDate;
-
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
